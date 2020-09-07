@@ -7,7 +7,7 @@ import CityList from '../CityList/CityList';
 
 const CustomForm = styled.div`
     text-align: center;
-    margin: auto;
+    margin: auto 5px;
     vertical-align: middle;
 `;
 
@@ -50,6 +50,10 @@ export class CityInput extends Component {
             .then(response => response.json())
             .catch(error => console.log(error.message))
             .then(cities => {
+                if(!cities) {
+                    console.warn('No city detected');
+                    return;
+                }
                 cities.forEach(city => {
                     const promise = fetch(`https://cors-anywhere.herokuapp.com/https://www.metaweather.com/api/location/${city.woeid}/`, {
                         'Access-Control-Allow-Origin': '*'
